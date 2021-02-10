@@ -9,7 +9,7 @@ void IRAM_ATTR enterToggle()
 void IRAM_ATTR exitToggle()
 {
     exitState = !exitState;
-    W
+    
 }
 
 void enter()

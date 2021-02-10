@@ -12,10 +12,10 @@ void init()
     }
     pinMode(JoySW, INPUT_PULLUP);
     pinMode(JoyY, INPUT);
-    pinMode(TOUCH, INPUT);
+    pinMode(TOUCH, INPUT_PULLUP);
 
     attachInterrupt(digitalPinToInterrupt(JoySW), enterToggle, RISING);
-    attachInterrupt(digitalPinToInterrupt(TOUCH), exitToggle, FALLING);
+    attachInterrupt(digitalPinToInterrupt(TOUCH), exitToggle, RISING);
 }
 
 void welcome()

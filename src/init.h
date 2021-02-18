@@ -1,6 +1,8 @@
 #ifndef init_h
 #define init_h
 
+void welcomeClose();
+
 void init()
 {
 
@@ -10,16 +12,14 @@ void init()
     {
         delay(500);
     }
-    pinMode(JoySW, INPUT_PULLUP);
     pinMode(JoyY, INPUT);
-    pinMode(TOUCH, INPUT_PULLUP);
-
-    attachInterrupt(digitalPinToInterrupt(JoySW), enterToggle, RISING);
-    attachInterrupt(digitalPinToInterrupt(TOUCH), exitToggle, RISING);
+    pinMode(JoyX, INPUT);
 }
 
 void welcome()
 {
+    timer = timerInit(timer, 5);
+
     tft.fillScreen(ILI9341_BLACK);
 
     tft.setTextColor(ILI9341_WHITE);
@@ -41,21 +41,26 @@ void welcome()
     tft.print("Weather");
     tft.setCursor(60, HEIGHT * 0.66);
     tft.print("Station");
-
-    timer = timerInit(timer, 5);
 }
 
-boolean welcomeClose()
+void welcomeClose()
 {
     if (timerFin(timer))
     {
+        unsigned int colorList[] = {ILI9341_RED, ILI9341_ORANGE, ILI9341_YELLOW, ILI9341_GREEN, ILI9341_CYAN, ILI9341_DARKCYAN, ILI9341_PURPLE};
+        for (int i = 0; i < 50; i++)
+        {
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 50+i, colorList[i]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 45+i, colorList[i + 1]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 40+i, colorList[i + 2]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 35+i, colorList[i + 3]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 30+i, colorList[i + 4]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 25+i, colorList[i + 5]);
+            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 20+i, colorList[i + 6]);
 
+        }
         tft.fillScreen(ILI9341_BLACK);
-        return true;
-    }
-    else
-    {
-        return false;
+        mapSetup();
     }
 }
 #endif

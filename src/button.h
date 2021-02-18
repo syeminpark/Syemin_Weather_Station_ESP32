@@ -1,34 +1,78 @@
 #ifndef button_h
 #define button_h
 
-void IRAM_ATTR enterToggle()
+void toggle(boolean **status, int *count, String direction)
 {
-    enterState = !enterState;
-}
 
-void IRAM_ATTR exitToggle()
-{
-    exitState = !exitState;
-    
-}
-
-void enter()
-{
-    if (enterState == LOW)
+    if (**status)
     {
-        //
-        enterState = !enterState;
-        Serial.println("enterClicked");
+        if (millis() - time2 > debounce * 1.5)
+        {
+            time2 = millis();
+            if (direction == "ascend")
+            {
+
+                (*count)++;
+            }
+            else
+            {
+                (*count)--;
+            }
+
+            if (*count >= 3)
+            {
+                *count = 0;
+            }
+            else if (*count <= -1)
+            {
+                *count = 2;
+            }
+            mapTri();
+        }
+
+        Serial.print(direction);
+        Serial.println(*count);
+        **status = false;
     }
 }
 
-void exit()
+void toggleVal(const int pin, boolean *state)
 {
-    if (exitState == LOW)
+    String direction = "";
+    int val = analogRead(pin);
+    if (pin == JoyY)
     {
-        //
-        exitState = !exitState;
-        Serial.println("exitClicked");
+        val = map(val, 0, 4095, 4095, 0);
+    }
+
+    if (val > 4000)
+    {
+        direction = "ascend";
+    }
+    else if (val < 100)
+    {
+        direction = "descend";
+    }
+    else
+    {
+        *state = true;
+    }
+
+    if (val > 4000 || val < 100)
+    {
+        if (pin == JoyX)
+        {
+            toggle(&state, &xCounter, direction);
+            cityCircle();
+        }
+
+        else if (pin == JoyY)
+        {
+            //위로 이동
+            toggle(&state, &yCounter, direction);
+            cityCircle();
+        }
     }
 }
+
 #endif

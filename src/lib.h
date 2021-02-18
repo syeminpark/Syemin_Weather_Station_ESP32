@@ -12,9 +12,11 @@
 
 #include "corea.c"
 #include "gvar.h"
-#include "button.h"
 #include "timer.h"
+#include "menu.h"
 #include "init.h"
+
+#include "button.h"
 #include "httpGet.h"
 
 #endif

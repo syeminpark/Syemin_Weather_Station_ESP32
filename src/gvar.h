@@ -17,13 +17,24 @@
 #define HEIGHT 320
 
 #define JoyY 34
-#define JoySW 32
-#define TOUCH 33
+#define JoyX 33
 
 WiFiUDP ntpUDP;
 // Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
 //hardware
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+
+const int debounce = 200;
+unsigned long int time2 = 0;
+boolean xState = false;
+boolean yState = false;
+
+int xCounter = 0;
+int yCounter = 0;
+double citySelect[3] = {HEIGHT * 0.72, HEIGHT * 0.78, HEIGHT * 0.84};
+double triX[3] = {WIDTH * 0.48, WIDTH * 0.46, WIDTH * 0.62};
+double triY[3] = {HEIGHT * 0.55, HEIGHT * 0.57, HEIGHT * 0.69};
+
 
 //포인터와 문자열
 // const char ssid[] = "TP-Link_F1F2";
@@ -48,11 +59,6 @@ unsigned long timerDelay = 10000;
 String jsonBuffer;
 
 int yValue = 0;
-int enterClick = 0;
-int exitClick = 0;
-int yMap;
-
-volatile boolean enterState = HIGH;
-volatile boolean exitState = HIGH;
+int xValue = 0;
 
 #endif

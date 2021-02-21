@@ -1,8 +1,9 @@
 #ifndef menu_h
 #define menu_h
+
+void map();
 void cityCircle();
 void mapTri();
-void map();
 
 void mapSetup()
 {
@@ -12,8 +13,9 @@ void mapSetup()
 }
 void map()
 {
-
+    tft.fillScreen(ILI9341_BLACK);
     tft.drawRGBBitmap(50, 10, (uint16_t *)corea.pixel_data, corea.width, corea.height);
+    
     tft.setTextSize(2);
     tft.setTextColor(ILI9341_DARKGREY);
     tft.setCursor(15, HEIGHT * 0.7);

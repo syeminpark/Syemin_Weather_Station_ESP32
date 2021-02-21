@@ -9,14 +9,19 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_ILI9341.h>
+#include <esp_now.h>
+#include <esp_wifi.h>
 
 #include "corea.c"
 #include "gvar.h"
 #include "timer.h"
 #include "menu.h"
-#include "init.h"
-
 #include "button.h"
+#include "cityWeather.h"
 #include "httpGet.h"
+#include "gfunc.h"
+
+#include "espcom.h"
+#include "init.h"
 
 #endif

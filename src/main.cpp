@@ -9,9 +9,6 @@ void setup()
 }
 void loop()
 {
-    httpGet();
-    //void toggleVal(boolean state, const int pin, String axis)
     welcomeClose();
-    toggleVal(JoyX, &xState);
-    toggleVal(JoyY, &yState);
+    switchScreen();
 }

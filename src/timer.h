@@ -16,6 +16,8 @@ int timerFin(hw_timer_t *Timer)
         interruptCounter--;
         portEXIT_CRITICAL(&timerMux);
         totalInterruptCounter++;
+
+        
         timerAlarmDisable(Timer);
         return true;
     }

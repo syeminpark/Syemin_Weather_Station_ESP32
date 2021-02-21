@@ -1,7 +1,7 @@
 #ifndef button_h
 #define button_h
 
-void toggle(boolean **status, int *count, String direction)
+void toggle(boolean **status, int **count, String direction, const int pin)
 {
 
     if (**status)
@@ -11,66 +11,73 @@ void toggle(boolean **status, int *count, String direction)
             time2 = millis();
             if (direction == "ascend")
             {
-
-                (*count)++;
+                (**count)++;
+                if (pin == JoyY && **count > 2)
+                {
+                    **count = 0;
+                }
+                else if (pin == JoyX && **count > 1)
+                {
+                    **count = 1;
+                }
             }
             else
             {
-                (*count)--;
+                (**count)--;
+                if (pin == JoyY && **count < 0)
+                {
+                    **count = 2;
+                }
+                else if (pin == JoyX && **count < 0)
+                {
+                    **count = 0;
+                }
             }
-
-            if (*count >= 3)
+            if (pin == JoyY)
             {
-                *count = 0;
+                mapTri();
+                cityCircle();
             }
-            else if (*count <= -1)
-            {
-                *count = 2;
-            }
-            mapTri();
+            **status = false;
         }
-
-        Serial.print(direction);
-        Serial.println(*count);
-        **status = false;
     }
 }
 
-void toggleVal(const int pin, boolean *state)
+void toggleVal(const int pin, boolean *state, int *count, int val)
 {
-    String direction = "";
-    int val = analogRead(pin);
-    if (pin == JoyY)
+    if (val > 4000 || val < 100)
     {
-        val = map(val, 0, 4095, 4095, 0);
-    }
+        String direction = "";
+        if (pin == JoyY)
+        {
+            val = map(val, 0, 4095, 4095, 0);
+        }
 
-    if (val > 4000)
-    {
-        direction = "ascend";
-    }
-    else if (val < 100)
-    {
-        direction = "descend";
+        if (val > 4000)
+        {
+            direction = "ascend";
+        }
+        else if (val < 100)
+        {
+            direction = "descend";
+        }
+
+        toggle(&state, &count, direction, pin);
     }
     else
     {
         *state = true;
     }
+}
 
-    if (val > 4000 || val < 100)
+void initButton()
+{
+    if (stage > 0)
     {
-        if (pin == JoyX)
+        toggleVal(JoyX, &xState, &xCounter, xVal);
+        if (stage < 3)
         {
-            toggle(&state, &xCounter, direction);
-            cityCircle();
-        }
-
-        else if (pin == JoyY)
-        {
-            //위로 이동
-            toggle(&state, &yCounter, direction);
-            cityCircle();
+            toggleVal(JoyY, &yState, &yCounter, yVal);
         }
     }
 }

@@ -1,26 +1,39 @@
 #ifndef init_h
 #define init_h
 
-void welcomeClose();
-
 void init()
 {
 
     tft.begin();
+    WiFi.mode(WIFI_STA);
+
+    if (esp_now_init() != ESP_OK)
+    {
+        Serial.println("Error initializing ESP-NOW");
+        return;
+    }
+
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
     {
+        Serial.print(".");
         delay(500);
     }
-    pinMode(JoyY, INPUT);
-    pinMode(JoyX, INPUT);
+    //초기화시 에러. 첫번째는 NULL
+    httpInit(3);
+    httpInit(1);
+    httpInit(2);
+    httpInit(0);
+
+    esp_wifi_set_ps(WIFI_PS_NONE);
+    esp_now_register_recv_cb(OnDataRecv);
+
 }
 
 void welcome()
 {
+    transition();
     timer = timerInit(timer, 5);
-
-    tft.fillScreen(ILI9341_BLACK);
 
     tft.setTextColor(ILI9341_WHITE);
     tft.setTextSize(3);
@@ -45,22 +58,10 @@ void welcome()
 
 void welcomeClose()
 {
-    if (timerFin(timer))
+    if (timerFin(timer) && stage == 0)
     {
-        unsigned int colorList[] = {ILI9341_RED, ILI9341_ORANGE, ILI9341_YELLOW, ILI9341_GREEN, ILI9341_CYAN, ILI9341_DARKCYAN, ILI9341_PURPLE};
-        for (int i = 0; i < 50; i++)
-        {
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 50+i, colorList[i]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 45+i, colorList[i + 1]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 40+i, colorList[i + 2]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 35+i, colorList[i + 3]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 30+i, colorList[i + 4]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 25+i, colorList[i + 5]);
-            tft.fillCircle(WIDTH * 0.5, HEIGHT * 0.4, 20+i, colorList[i + 6]);
-
-        }
-        tft.fillScreen(ILI9341_BLACK);
-        mapSetup();
+        stage = 1;
+        transition();
     }
 }
 #endif

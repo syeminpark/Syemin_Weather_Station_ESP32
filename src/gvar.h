@@ -46,10 +46,8 @@ double triY[3] = {HEIGHT * 0.55, HEIGHT * 0.57, HEIGHT * 0.69};
 int stage = 0;
 
 //포인터와 문자열
-// const char ssid[] = "TP-Link_F1F2";
-// const char password[] = "85510432";
-const char *ssid = "somhouse";
-const char *password = "som1234*";
+const char ssid[] = "TP-Link_F1F2";
+const char password[] = "85510432";
 
 //timver variables
 volatile int interruptCounter;

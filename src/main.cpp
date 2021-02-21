@@ -5,8 +5,7 @@ void setup()
     init();
     welcome();
     Serial.begin(115200);
-    Serial.println("serialStart");
-}
+    Serial.println("serialStart");}
 void loop()
 {
     welcomeClose();

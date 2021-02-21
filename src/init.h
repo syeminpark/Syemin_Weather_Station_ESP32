@@ -5,13 +5,18 @@ void init()
 {
 
     tft.begin();
+
     WiFi.mode(WIFI_STA);
 
+    //초기화시 에러. 첫번째는 NULLn;
     if (esp_now_init() != ESP_OK)
     {
         Serial.println("Error initializing ESP-NOW");
         return;
     }
+
+    esp_wifi_set_ps(WIFI_PS_NONE);
+    esp_now_register_recv_cb(OnDataRecv);
 
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
@@ -19,15 +24,11 @@ void init()
         Serial.print(".");
         delay(500);
     }
-    //초기화시 에러. 첫번째는 NULL
     httpInit(3);
     httpInit(1);
     httpInit(2);
     httpInit(0);
-
-    esp_wifi_set_ps(WIFI_PS_NONE);
-    esp_now_register_recv_cb(OnDataRecv);
-
+    
 }
 
 void welcome()

@@ -61,8 +61,10 @@ void toggleVal(const int pin, boolean *state, int *count, int val)
         {
             direction = "descend";
         }
-
-        toggle(&state, &count, direction, pin);
+        //함수 포인터 연습 
+        void (*toggleP)(boolean **, int **, String, const int);
+        toggleP = toggle;
+        toggleP(&state, &count, direction, pin);
     }
     else
     {

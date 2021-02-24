@@ -55,9 +55,9 @@ void mapTri()
 
     for (int i = 0; i < 3; i++)
     {
-        tft.fillTriangle(triX[i] - xPad, triY[i] - yPad, triX[i] + xPad, triY[i] - yPad, triX[i], triY[i], ILI9341_WHITE);
+        tft.fillTriangle(triP[0][i] - xPad, triP[1][i] - yPad, triP[0][i] + xPad, triP[1][i] - yPad, triP[0][i], triP[1][i], ILI9341_WHITE);
     }
-    tft.fillTriangle(triX[yCounter] - xPad, triY[yCounter] - yPad, triX[yCounter] + xPad, triY[yCounter] - yPad, triX[yCounter], triY[yCounter], ILI9341_MAROON);
+    tft.fillTriangle(triP[0][yCounter] - xPad, triP[1][yCounter] - yPad, triP[0][yCounter] + xPad, triP[1][yCounter] - yPad, triP[0][yCounter], triP[1][yCounter], ILI9341_MAROON);
 }
 
 #endif // !menu_h

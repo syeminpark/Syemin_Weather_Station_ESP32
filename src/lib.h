@@ -6,6 +6,7 @@
 #include <Adafruit_GFX.h>
 #include <HTTPClient.h>
 #include <Arduino_Json.h>
+#include <WiFiUdp.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_ILI9341.h>

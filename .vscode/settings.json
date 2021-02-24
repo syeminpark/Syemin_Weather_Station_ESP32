@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "random": "cpp"
+        "random": "cpp",
+        "sstream": "cpp",
+        "string": "cpp",
+        "*.tcc": "cpp"
     }
 }

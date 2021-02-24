@@ -5,17 +5,14 @@
 #define PIN_Y 34
 
 uint8_t broadcastAddress[] = {0x84,0xCC,0xA8,0x5F,0x43,0xA0};
-int time2;
-int debounce=200;
-int state;
 
 typedef struct struct_message {
+  int check=1;
   int x;
   int y;
 } struct_message;
 
-struct_message myData;
-
+struct_message send;
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   Serial.print("\r\nLast Packet Send Status:\t");
@@ -34,7 +31,7 @@ void setup() {
   esp_now_register_send_cb(OnDataSent);
   esp_now_peer_info_t peerInfo;
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  peerInfo.channel = 0;  
+  peerInfo.channel = 1;  
   peerInfo.encrypt = false;
 //  
   // Add peer        
@@ -48,14 +45,15 @@ void setup() {
 
 void loop() {
   // Set values to send
-  myData.x = analogRead(PIN_X);
-  myData.y = analogRead(PIN_Y);
+  send.x = analogRead(PIN_X);
+  send.y = analogRead(PIN_Y);
 
-  if(myData.x>1900 || myData.x<1700||myData.y>1900 || myData.y<1700){ 
-  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
+  if(send.x>2000 || send.x<1600||send.y>2000 || send.y<1600){ 
+  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &send, sizeof(send));
+  Serial.println(send.x);
+Serial.println(send.y);
+
   }
-Serial.println(myData.x);
-Serial.println(myData.y);
 
 ////   
 //if (result == ESP_OK) {

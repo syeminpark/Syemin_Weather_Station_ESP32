@@ -11,3 +11,7 @@ Based on ESP32. TFT monitor.
 
 
 ![alt text](https://github.com/syeminpark/Syemin_Weather_Station/blob/main/readmeImage.png?raw=true)
+
+### DEMO VIDEO
+
+https://drive.google.com/file/d/1ZzeMTRJeMqyEtIKFHuM1BgRWwQqWfv5a/view?usp=sharing 

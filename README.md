@@ -1,4 +1,4 @@
-# Syemin_Weather_Station
+# Syemin_Weather_Station_ESP32
 
 Based on ESP32. TFT monitor. 
 
@@ -10,7 +10,7 @@ Based on ESP32. TFT monitor.
 - button debounce
 
 
-![alt text](https://github.com/syeminpark/Syemin_Weather_Station/blob/main/readmeImage.png?raw=true)
+![alt text](https://github.com/syeminpark/Syemin_Weather_Station_ESP32/blob/main/readmeImage.png?raw=true)
 
 ### DEMO VIDEO
 
